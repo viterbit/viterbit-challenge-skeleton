@@ -25,6 +25,15 @@ services:
       MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
       MERCURE_JWT_SECRET: ${CADDY_MERCURE_JWT_SECRET:-!ChangeMe!}
 
+  mongo:
+    container_name: mongo-data
+    image: mongo:4.4.9
+    restart: always
+    ports:
+      - ${PORT_MONGODB:-27017}:27017
+    volumes:
+      - mongodata:/data/db
+
   caddy:
     build:
       context: .
@@ -62,5 +71,6 @@ volumes:
   php_socket:
   caddy_data:
   caddy_config:
+  mongodata:
 ###> symfony/mercure-bundle ###
 ###< symfony/mercure-bundle ###
